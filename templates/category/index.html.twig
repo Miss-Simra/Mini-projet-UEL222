@@ -3,9 +3,19 @@
 {% block title %}Category index{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+    <h1 class="p-3 text-center bg-primary text-white">Category index</h1>
 
-    <table class="table">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center mt-3">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="{{ path('article_index') }}">Home</a>
+      <a class="nav-item nav-link" href="{{ path('category_index') }}">Categories</a>
+      <a class="nav-item nav-link" href="#">About us</a>
+      <a class="nav-item nav-link" href="#">My account</a>
+    </div>
+    </nav>
+
+    <div class="m-4">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -19,8 +29,8 @@
                 <td>{{ category.id }}</td>
                 <td>{{ category.name }}</td>
                 <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+                    <a href="{{ path('category_show', {'id': category.id}) }}" class="m-1 btn btn-primary" role="button">show</a>
+                    <a href="{{ path('category_edit', {'id': category.id}) }}" class="m-1 btn btn-primary" role="button">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -30,6 +40,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
-    <a href="{{ path('category_new') }}">Create new</a>
+    <a href="{{ path('category_new') }}" class="m-4 btn btn-primary" role="button">Create new</a>
 {% endblock %}

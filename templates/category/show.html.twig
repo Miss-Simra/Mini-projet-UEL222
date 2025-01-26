@@ -3,9 +3,10 @@
 {% block title %}Category{% endblock %}
 
 {% block body %}
-    <h1>Category</h1>
+    <h1 class="p-3 text-center bg-primary text-white">Category</h1>
 
-    <table class="table">
+    <div class="m-4">
+    <table class="table table-striped">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -17,10 +18,13 @@
             </tr>
         </tbody>
     </table>
+    </div>
 
-    <a href="{{ path('category_index') }}">back to list</a>
+    <div class="d-flex">
+    <a href="{{ path('category_index') }}" class="m-4 btn btn-primary" role="button">back to list</a>
 
-    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+    <a href="{{ path('category_edit', {'id': category.id}) }}" class="m-4 btn btn-primary" role="button">edit</a>
 
     {{ include('category/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
