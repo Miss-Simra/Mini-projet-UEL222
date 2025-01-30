@@ -14,11 +14,23 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/article')]
 class ArticleController extends AbstractController
 {
+    // j'ai changé un peu la logique pour que la barre de recherche s'affiche correctement
     #[Route('/', name: 'article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+public function index(Request $request, ArticleRepository $articleRepository): Response
     {
+        $search = $request->query->get('q', '');
+
+        $articles = $search 
+            ? $articleRepository->createQueryBuilder('a')
+                ->where('a.title LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ->getQuery()
+                ->getResult()
+            : $articleRepository->findAll();
+
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articles,
+            'search' => $search,
         ]);
     }
 

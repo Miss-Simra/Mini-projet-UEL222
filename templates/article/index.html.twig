@@ -10,8 +10,6 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="{{ path('article_index') }}">Home</a> 
       <a class="nav-item nav-link" href="{{ path('category_index') }}">Categories</a>
-      <a class="nav-item nav-link" href="#">About us</a>
-      <a class="nav-item nav-link" href="#">My account</a>
     </div>
     </nav>
 
@@ -50,6 +48,13 @@
         </tbody>
     </table>
     </div>
+        <!-- FRONT END : pour le formulaire de recherche -->
+    <form method="GET" action="{{ path('article_index') }}" class="d-flex justify-content-center my-3">
+        <input type="text" name="q" value="{{ search }}" class="form-control w-25 me-2" placeholder="Rechercher un article">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+
+    
 
     <a href="{{ path('article_new') }}" class="m-4 btn btn-primary" role="button">Create new</a>
 {% endblock %}
