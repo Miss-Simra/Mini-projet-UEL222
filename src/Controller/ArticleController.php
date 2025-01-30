@@ -10,27 +10,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\CategoryRepository;
+
 
 #[Route('/article')]
 class ArticleController extends AbstractController
 {
-    // j'ai changé un peu la logique pour que la barre de recherche s'affiche correctement
+    // j'ai changé un peu la logique pour que la barre de recherche s'affiche correctement et que la barre de filtre marche aussi comme prévu
     #[Route('/', name: 'article_index', methods: ['GET'])]
-public function index(Request $request, ArticleRepository $articleRepository): Response
+    public function index(Request $request, ArticleRepository $articleRepository, CategoryRepository $categoryRepository): Response
     {
         $search = $request->query->get('q', '');
+        $selectedCategory = $request->query->get('category', '');
 
-        $articles = $search 
-            ? $articleRepository->createQueryBuilder('a')
-                ->where('a.title LIKE :search')
-                ->setParameter('search', '%'.$search.'%')
-                ->getQuery()
-                ->getResult()
-            : $articleRepository->findAll();
+        $queryBuilder = $articleRepository->createQueryBuilder('a');
+
+        if (!empty($search)) {
+            $queryBuilder
+                ->andWhere('a.title LIKE :search OR a.content LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
+
+        if (!empty($selectedCategory)) {
+            $queryBuilder
+                ->andWhere('a.category = :category')
+                ->setParameter('category', $selectedCategory);
+        }
+
+        $articles = $queryBuilder->getQuery()->getResult();
+        $categories = $categoryRepository->findAll();
 
         return $this->render('article/index.html.twig', [
             'articles' => $articles,
             'search' => $search,
+            'categories' => $categories,
+            'selectedCategory' => $selectedCategory,
         ]);
     }
 

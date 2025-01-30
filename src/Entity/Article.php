@@ -1,5 +1,4 @@
-<?php
-
+<?php //j'ai modifié un peu la logique car le système de filtre par categorie a fait pleins d'erreurs symphony
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
@@ -21,7 +20,7 @@ class Article
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private $Category;
+    private ?Category $category = null;
 
     public function getId(): ?int
     {
@@ -54,13 +53,15 @@ class Article
 
     public function getCategory(): ?Category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(?Category $Category): self
+    public function setCategory(?Category $category): self
     {
-        $this->Category = $Category;
+        $this->category = $category;
 
         return $this;
     }
 }
+
+?>
