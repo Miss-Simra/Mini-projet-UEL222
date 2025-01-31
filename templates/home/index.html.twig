@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{# 
+
+Ressources utilisées : 
+
+https://getbootstrap.com/ 
+https://stackoverflow.com/questions/73074232/set-the-background-of-the-body-to-an-image-while-using-bootstrap-5
+https://stackoverflow.com/questions/73671292/how-to-add-favicon-with-symfony-6
+
+#}
+
+{# Page d'accueil : Home #}
+
+{% block body %}
+
+{# Navbar bleue horizontale en alignant au centre tous les liens #}
+
+<nav class="navbar navbar-expand-lg bg-primary d-flex justify-content-center p-3" style="font-size:1.3rem;">
+    <ul class="navbar-nav">
+    <li class="nav-item">
+    <a class="nav-link text-white" href="#">Home</a> 
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" href="{{ path('article_index') }}">Articles</a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link text-white" href="{{ path('category_index') }}">Categories</a>
+      </li>
+      </ul>
+    </nav>
+
+{# Fond de la page d'accueil #}
+
+<div class="bg-image" 
+     style="background-image: url('{{ asset('img/bg.png') }}'); background-size: cover; height: 100vh;
+    padding: 10rem;">
+
+    {# Titre en gras en majuscules 
+    Bloc du h2 avec une largeur de 6rem #}
+
+    <h2 class="text-uppercase display-1 fw-bold" style="width: 6rem;">Group Project</h2>
+    <p>By Julien .C Simra .K Luka .J</p>
+</div>
+
+{% endblock %}

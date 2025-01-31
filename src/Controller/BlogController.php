@@ -11,6 +11,7 @@ class BlogController extends AbstractController
     #[Route('/', name: 'blog')]
     public function index(): Response
     {
-        return $this->redirectToRoute('article_index');
+        return $this->redirectToRoute('app_home');
+        // Redirection vers la page d'accueil
     }
 }

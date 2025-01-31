@@ -1,19 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article index{% endblock %}
+{% block title %}Articles{% endblock %}
 
 {% block body %}
 
-    <h1 class="p-3 text-center bg-primary text-white">Article index</h1>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center mt-3">
+    {# H1 : marges intérieures 3, centré, fond bleu, police blanche #}
+    <h1 class="p-3 text-center bg-primary text-white">Articles</h1>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center mt-3" style="font-size:1.2rem;">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="{{ path('article_index') }}">Home</a> 
+
+    {# A href : lien actif en noir #}
+
+    <a class="nav-item nav-link active" href="{{ path('app_home') }}">Home</a>
+      <a class="nav-item nav-link" href="{{ path('article_index') }}">Articles</a> 
       <a class="nav-item nav-link" href="{{ path('category_index') }}">Categories</a>
     </div>
     </nav>
 
+    {# Marges 4 #}
     <div class="m-4">
+    {# Rayures zébrées #}
     <table class="table table-striped">
         <thead>
             <tr>
