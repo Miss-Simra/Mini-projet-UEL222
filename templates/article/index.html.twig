@@ -22,6 +22,7 @@
 
     {# Marges 4 #}
     <div class="m-4">
+    
     {# Rayures zébrées #}
     <table class="table table-striped">
         <thead>
@@ -59,14 +60,14 @@
     </div>
         <!-- FRONT END : pour le formulaire de recherche BACKEND : gérer les filtres du formulaire de recherche -->
     <form method="GET" action="{{ path('article_index') }}" class="d-flex justify-content-center my-3">
-        <input type="text" name="q" value="{{ search }}" class="form-control w-25 me-2" placeholder="Rechercher un article">
+        <input type="text" name="q" value="{{ search }}" class="form-control w-25 me-2" placeholder="Search an article">
         <select name="category" class="form-control w-25 me-2">
-            <option value="">Toutes les catégories</option>
+            <option value="">All categories</option>
             {% for category in categories %}
                 <option value="{{ category.id }}" {% if category.id == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
             {% endfor %}
         </select>
-        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
 
     <a href="{{ path('article_new') }}" class="m-4 btn btn-primary" role="button">Create new</a>

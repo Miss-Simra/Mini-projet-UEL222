@@ -8,8 +8,11 @@
 
     {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
 
+    <div class="d-flex">
     <a href="{{ path('category_index') }}" class="m-4 btn btn-primary" role="button">back to list</a>
 
     {{ include('category/_delete_form.html.twig') }}
+
+    </div>
 
 {% endblock %}
