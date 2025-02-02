@@ -5,11 +5,16 @@
 {% block body %}
     <h1 class="p-3 text-center bg-primary text-white">Edit Article</h1>
 
-    <div class="">
+    
     {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
+
+    {# Flex : Horizontalement #}
+    <div class="d-flex">
 
     <a href="{{ path('article_index') }}" class="m-4 btn btn-primary" role="button">back to list</a>
 
     {{ include('article/_delete_form.html.twig') }}
+
     </div>
+
 {% endblock %}
