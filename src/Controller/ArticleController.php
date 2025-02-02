@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CategoryRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 #[Route('/article')]
@@ -18,12 +19,15 @@ class ArticleController extends AbstractController
 {
     // j'ai changé un peu la logique pour que la barre de recherche s'affiche correctement et que la barre de filtre marche aussi comme prévu
     #[Route('/', name: 'article_index', methods: ['GET'])]
-    public function index(Request $request, ArticleRepository $articleRepository, CategoryRepository $categoryRepository): Response
+    public function index(Request $request, ArticleRepository $articleRepository, CategoryRepository $categoryRepository, EntityManagerInterface $em, PaginatorInterface $paginator): Response
     {
         $search = $request->query->get('q', '');
         $selectedCategory = $request->query->get('category', '');
 
-        $queryBuilder = $articleRepository->createQueryBuilder('a');
+        $queryBuilder = $articleRepository->createQueryBuilder('a')
+           ->orderBy('a.id', 'ASC');
+        // Trié par ID
+
 
         if (!empty($search)) {
             $queryBuilder
@@ -40,13 +44,25 @@ class ArticleController extends AbstractController
         $articles = $queryBuilder->getQuery()->getResult();
         $categories = $categoryRepository->findAll();
 
+        
+        $dql   = "SELECT a FROM App\Entity\Article a";
+        $query = $em->createQuery($dql);
+    
+        $pagination = $paginator->paginate(
+            $queryBuilder, 
+            $request->query->getInt('page', 1), /* Nombre de la page */
+            10 /* Limite par page */
+        );
+
         return $this->render('article/index.html.twig', [
             'articles' => $articles,
             'search' => $search,
             'categories' => $categories,
             'selectedCategory' => $selectedCategory,
+            'pagination' => $pagination,
         ]);
     }
+
 
     #[Route('/new', name: 'article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
